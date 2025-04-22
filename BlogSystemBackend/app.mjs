@@ -56,25 +56,24 @@ const uploadMiddleware = multer({ dest: 'uploads/' });
 const PORT = process.env.PORT ;
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 
-// MongoDB connection
+
 connectDB();
 
-// Middleware
 app.use(cors({ credentials: true, origin: CLIENT_ORIGIN }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Upload endpoint
+
 app.post('/upload', uploadMiddleware.single('file'), (req, res) => {
   const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
   res.json({ url: fileUrl });
 });
 
-// Routes
+
 app.use('/post', postsRouter);
 
-// Start server
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
