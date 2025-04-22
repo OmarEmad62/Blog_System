@@ -1,8 +1,8 @@
-const staticCacheName = 'site-static-v2';
+const staticCacheName = 'site-static-v3';
 const dynamicCacheName = 'site-dynamic-v1';
 const assets = [
     "/index.html",
-    "/src/components/fallback.tsx",
+    "/fallback.html",
   ];
 
 // install event
@@ -44,3 +44,4 @@ self.addEventListener('fetch', evt => {
     }).catch(() => caches.match("/src/components/fallback.tsx"))
   );
 });
+
