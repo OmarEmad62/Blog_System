@@ -13,7 +13,7 @@ const IndexPage: React.FC = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/post')
+    fetch(`${import.meta.env.VITE_API_URL}/post`)
       .then(response => response.json())
       .then(posts => {
         setPosts(posts);

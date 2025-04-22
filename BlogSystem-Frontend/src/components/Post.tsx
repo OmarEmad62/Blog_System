@@ -15,7 +15,7 @@ const Post: React.FC<PostProps> = ({_id, title, summary, cover, createdAt }) => 
     <div className='post'>
     <div className="img">
     <Link to={`/post/${_id}`}>
-    <img src={'http://localhost:4000/'+cover} alt=""/>
+    <img src={`${import.meta.env.VITE_API_URL}/${cover}`} alt="" />
     </Link>
     </div>
     <div className="text">

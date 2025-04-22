@@ -18,7 +18,7 @@ const PostPage = () => {
   const [postInfo, setPostInfo] = useState<postInfo | null>(null);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch(`http://localhost:4000/post/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/post/${id}`)
       .then(response => {
         response.json().then(postInfo => {
           setPostInfo(postInfo);

@@ -17,7 +17,7 @@ const Reorder: React.FC = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/post')
+    fetch(`${import.meta.env.VITE_API_URL}/post`)
       .then(response => response.json())
       .then(posts => {
       
@@ -47,7 +47,7 @@ const Reorder: React.FC = () => {
       order: index, 
     }));
 
-    await fetch('http://localhost:4000/post/reorder', {
+    await fetch(`${import.meta.env.VITE_API_URL}/post/reorder`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reorderedPosts: formattedPosts }),
@@ -100,7 +100,7 @@ const SortablePost: React.FC<{ post: PostType }> = ({ post }) => {
       className="post"
     >
       <div className="img">
-        <img src={'http://localhost:4000/' + cover} alt={title} />
+        <img src={`${import.meta.env.VITE_API_URL}/${cover}`} alt={title} />
       </div>
       <div className="text">
         <h2>{title}</h2>

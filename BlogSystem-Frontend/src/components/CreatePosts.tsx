@@ -29,7 +29,7 @@ import { openDB } from 'idb';
                 formData.append('file', file);
     
                 try {
-                  const response = await fetch('http://localhost:4000/upload', {
+                  const response = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
                     method: 'POST',
                     body: formData,
                   });
@@ -135,7 +135,7 @@ const CreatePosts = () => {
       data.append('file', file);
     }
 
-    const response = await fetch('http://localhost:4000/post', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/post`, {
       method: 'POST',
       body: data,
     });
