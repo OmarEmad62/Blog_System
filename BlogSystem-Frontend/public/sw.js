@@ -41,7 +41,7 @@ self.addEventListener('fetch', evt => {
           return fetchRes;
         })
       });
-    }).catch(() => caches.match("/src/components/fallback.tsx"))
+    }).catch(() => caches.match("/fallback.html"))
   );
 });
 
