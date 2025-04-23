@@ -2,7 +2,7 @@
 {
     "name": "BLOGIFY",
     "short_name": "BLOGIFY",
-    "start_url": "/index.html",
+    "start_url": ".",
     "display": "standalone",
     "background_color": "#E1D9E1",
     "theme_color": "#BFA2BF",
