@@ -1,47 +1,54 @@
-const staticCacheName = 'site-static-v3';
-const dynamicCacheName = 'site-dynamic-v1';
-const assets = [
-    "/index.html",
-    "/fallback.html",
-  ];
 
-// install event
-self.addEventListener('install', evt => {
-  //console.log('service worker installed');
-  evt.waitUntil(
-    caches.open(staticCacheName).then((cache) => {
-      console.log('caching shell assets');
-      cache.addAll(assets);
-    })
-  );
-});
-//
-// activate event
-self.addEventListener('activate', evt => {
-  //console.log('service worker activated');
-  evt.waitUntil(
-    caches.keys().then(keys => {
-      //console.log(keys);
-      return Promise.all(keys
-        .filter(key => key !== staticCacheName && key !== dynamicCacheName)
-        .map(key => caches.delete(key))
-      );
+const CACHE_NAME = "blogify-v1";
+const urlsToCache = [
+  "/", 
+  "/index.html",
+  "/fallback.html",
+  "/post",
+  "/uploads"
+];
+
+// Install event
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
     })
   );
 });
 
-// fetch event
-self.addEventListener('fetch', evt => {
-  //console.log('fetch event', evt);
-  evt.respondWith(
-    caches.match(evt.request).then(cacheRes => {
-      return cacheRes || fetch(evt.request).then(fetchRes => {
-        return caches.open(dynamicCacheName).then(cache => {
-          cache.put(evt.request.url, fetchRes.clone());
-          return fetchRes;
+// Activate event
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
         })
-      });
-    }).catch(() => caches.match("/fallback.html"))
+      )
+    )
   );
 });
 
+// Fetch event - Network First Strategy
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    fetch(event.request)
+      .then((res) => {
+        // Clone response and save to cache
+        const resClone = res.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, resClone);
+        });
+        return res;
+      })
+      .catch(() => {
+        // Fallback to cache
+        return caches.match(event.request).then((cachedRes) => {
+          return cachedRes || caches.match("/fallback.html");
+        });
+      })
+  );
+});
