@@ -1,7 +1,3 @@
-Here's a professional and clear `README.md` tailored for your **Full Stack Realtime Chat App** GitHub project:
-
----
-
 # ✨ Full Stack Realtime Chat App
 
 A real-time full-stack chat application built with **MERN**, **Socket.io**, **TailwindCSS**, and **DaisyUI**, featuring user authentication, live messaging, online user status, and seamless deployment.
